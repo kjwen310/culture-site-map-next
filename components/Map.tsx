@@ -2,7 +2,7 @@ import Image from 'next/image'
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet"
 import MarkerClusterGroup from "./MapCluster"
 import { StyledMap, StyledPopup } from './styles/Map.styles'
-import icons from '../utils/icons'
+import { green, grey, red } from '../utils/icons'
 import { MapProps, Site } from "../types"
 
 import 'leaflet/dist/leaflet.css'
@@ -26,13 +26,13 @@ const Map: React.FC<MapProps> = ({
     setSite(item)
 
     if (prevMarker) prevMarker.setIcon(prevIcon)
-    if (currentMarker.getIcon() === icons.red) {
+    if (currentMarker.getIcon() === red) {
       setPrevMarker(null)
       setShouldShowSiteInfo(false)
     } else {
       setPrevMarker(currentMarker)
       setPrevIcon(currentMarker.getIcon())
-      currentMarker.setIcon(icons.red)
+      currentMarker.setIcon(red)
       setShouldShowSiteInfo(true)
       const zoomLevel = 18
       const correction = 0.0006
@@ -62,7 +62,7 @@ const Map: React.FC<MapProps> = ({
         <MarkerClusterGroup>
           {
             data.map((item) => {
-              const icon = item.assetsClassifyName === '國定古蹟' ? icons.green : icons.grey
+              const icon = item.assetsClassifyName === '國定古蹟' ? green : grey
 
               return (
                 <Marker

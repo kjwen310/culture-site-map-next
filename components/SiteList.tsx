@@ -1,6 +1,6 @@
 import React from 'react'
 import { StyledSiteList } from './styles/SiteList.styles'
-import icons from '../utils/icons'
+import { red } from '../utils/icons'
 import { SiteListProps, Site } from '../types'
 
 const SiteList: React.FC<SiteListProps> = ({
@@ -20,13 +20,13 @@ const SiteList: React.FC<SiteListProps> = ({
 
     setSite(item)
     if (prevMarker) prevMarker.setIcon(prevIcon)
-    if (currentMarker.getIcon() === icons.red) {
+    if (currentMarker.getIcon() === red) {
       setPrevMarker(null)
       setShouldShowSiteInfo(false)
     } else {
       setPrevMarker(currentMarker)
       setPrevIcon(currentMarker.getIcon())
-      currentMarker.setIcon(icons.red)
+      currentMarker.setIcon(red)
       setShouldShowSiteInfo(true)
       const zoomLevel = 18
       const correction = 0.0006
