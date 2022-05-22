@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import React, { useEffect } from 'react'
 
 import PieChart from './PieChart'
 import BarChart from './BarChart'
@@ -6,8 +6,9 @@ import SiteList from './SiteList'
 import SiteInfo from './SiteInfo'
 import SiteListNoResult from './SiteListNoResult'
 import { StyledInfoBox } from './styles/InfoBox.styles'
+import { InfoBoxProps } from '../types'
 
-const Info = ({
+const Info: React.FC<InfoBoxProps> = ({
   mapRef,
   markerRefs,
   prevMarker,

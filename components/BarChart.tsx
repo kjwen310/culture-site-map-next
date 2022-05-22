@@ -10,6 +10,7 @@ import {
 } from 'chart.js'
 import { Bar } from 'react-chartjs-2'
 import { StyledBarChart } from './styles/BarChart.styles'
+import { BarChartProps, Cities } from '../types';
 
 ChartJS.register(
   CategoryScale,
@@ -33,21 +34,14 @@ const options = {
     },
     y: {
       stacked: true,
-      ticks: {
-        beginAtZero: true,
-        fontSize: 12,
-      },
       gridLines: {
         display: false,
       },
     },
   },
-  legend: {
-    display: false,
-  },
 }
 
-function updateBarChart(cities) {
+function updateBarChart(cities: Cities) {
   const aimData1 = []
   const aimData2 = []
   const aimLabel = []
@@ -80,7 +74,7 @@ function updateBarChart(cities) {
   return data
 }
 
-const BarChart = ({ cities }) => {
+const BarChart: React.FC<BarChartProps> = ({ cities }) => {
   const data = updateBarChart(cities)
 
   return (

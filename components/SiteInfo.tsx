@@ -1,11 +1,17 @@
+import React from 'react'
 import { StyledSiteInfo } from './styles/SiteInfo.styles'
 import { MdCloseFullscreen } from "react-icons/md"
+import { SiteInfoProps } from '../types'
 
-const SiteInfo = ({ site, setShouldShowSiteInfo, markerRefs }) => {
+const SiteInfo: React.FC<SiteInfoProps> = ({
+  site,
+  setShouldShowSiteInfo,
+  markerRefs,
+}) => {
 
-  function handleClose(item) {
+  function handleClose(caseId: string) {
     setShouldShowSiteInfo(false)
-    const currentMarker = markerRefs.current[item.caseId]
+    const currentMarker = markerRefs.current[caseId]
     currentMarker.closePopup()
   }
 
@@ -14,7 +20,7 @@ const SiteInfo = ({ site, setShouldShowSiteInfo, markerRefs }) => {
       {
         site && (
           <StyledSiteInfo>
-            <div className="close-icon" onClick={() => handleClose(site)}>
+            <div className="close-icon" onClick={() => handleClose(site.caseId)}>
               <MdCloseFullscreen />
             </div>
             <h2>{site.caseName}</h2>

@@ -1,3 +1,4 @@
+// This Component is from https://github.com/YUzhva/react-leaflet-markercluster
 import { createPathComponent } from '@react-leaflet/core'
 import L from 'leaflet'
 import 'leaflet.markercluster/dist/MarkerCluster.css'
@@ -6,8 +7,8 @@ import 'leaflet.markercluster'
 
 const MarkerClusterGroup = createPathComponent(
   ({ children: _c, ...props }, ctx) => {
-    const clusterProps = {}
-    const clusterEvents = {}
+    const clusterProps: any = {}
+    const clusterEvents: any = {}
 
     // Splitting props and events to different objects
     Object.entries(props).forEach(([propName, prop]) =>
@@ -17,7 +18,7 @@ const MarkerClusterGroup = createPathComponent(
     );
 
     // Creating markerClusterGroup Leaflet element
-    const markerClusterGroup = new L.markerClusterGroup(clusterProps)
+    const markerClusterGroup = new (L as any).markerClusterGroup(clusterProps)
 
     // Initializing event listeners
     Object.entries(clusterEvents).forEach(([eventAsProp, callback]) => {

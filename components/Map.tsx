@@ -1,16 +1,15 @@
-import { useState } from "react"
 import Image from 'next/image'
-
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet"
 import MarkerClusterGroup from "./MapCluster"
 import { StyledMap, StyledPopup } from './styles/Map.styles'
 import icons from '../utils/icons'
+import { MapProps, Site } from "../types"
 
 import 'leaflet/dist/leaflet.css'
 import 'leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css'
 import 'leaflet-defaulticon-compatibility'
 
-const Map = ({
+const Map: React.FC<MapProps> = ({
   mapRef,
   prevMarker,
   setPrevMarker,
@@ -22,7 +21,7 @@ const Map = ({
   setSite,
 }) => {
 
-  function handleSetView(item) {
+  function handleSetView(item: Site) {
     const currentMarker = markerRefs.current[item.caseId]
     setSite(item)
 
@@ -62,7 +61,7 @@ const Map = ({
 
         <MarkerClusterGroup>
           {
-            data.map((item, i) => {
+            data.map((item) => {
               const icon = item.assetsClassifyName === '國定古蹟' ? icons.green : icons.grey
 
               return (
@@ -70,10 +69,7 @@ const Map = ({
                   key={item.caseId}
                   ref={(ref) => markerRefs.current[item.caseId] = ref}
                   icon={icon}
-                  position={[
-                    item.latitude ? item.latitude : '',
-                    item.longitude ? item.longitude : '',
-                  ]}
+                  position={[item.latitude, item.longitude]}
                   eventHandlers={{
                     click: () => handleSetView(item),
                   }}

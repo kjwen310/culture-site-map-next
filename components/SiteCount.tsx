@@ -1,6 +1,8 @@
-import { StyledSiteCount, StyledSiteCountnt } from './styles/SiteCount.styles'
+import React from 'react'
+import { StyledSiteCount } from './styles/SiteCount.styles'
+import { SiteCountProps } from '../types'
 
-const SiteCount = ({
+const SiteCount: React.FC<SiteCountProps> = ({
   dataLen,
   areaCulSiteLen,
   cityCulSiteLen,

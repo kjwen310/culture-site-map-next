@@ -4,32 +4,22 @@ import { Pie } from 'react-chartjs-2'
 
 import { StyledPieChart } from './styles/PieChart.styles'
 import { siteTypes } from '../constants'
+import { PieChartProps, Site } from '../types'
 
 ChartJS.register(ArcElement, Tooltip, Legend)
 
 const options = {
   responsive: true,
   maintainAspectRatio: false,
-  legend: {
-    display: false,
-  },
-  plugins: {
-    labels: [{
-      render: 'label',
-      overlap: false,
-      fontSize: 16,
-      fontColor: '#474747',
-    }],
-  },
 }
 
-function updatePieData(cityCulSites) {
+function updatePieData(cityCulSites: Site[]) {
   let counter = 0
   const aimData = []
   const aimColor = []
   const aimLabel = []
 
-  cityCulSites.forEach((item) => {
+  cityCulSites.forEach((item: Site) => {
     siteTypes.forEach((siteType) => {
       if (item.assetsTypes[0].name === siteType.type) {
         siteType.num += 1;
@@ -62,7 +52,7 @@ function updatePieData(cityCulSites) {
   return data
 }
 
-const PieChart = ({ cityCulSites }) => {
+const PieChart: React.FC<PieChartProps> = ({ cityCulSites }) => {
   const data = updatePieData(cityCulSites)
 
   return (

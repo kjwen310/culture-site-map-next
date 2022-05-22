@@ -16,19 +16,21 @@ const Map = dynamic(() => import("../components/Map"), { ssr:false })
 import { ResetStyle, GlobalStyle } from '../components/styles/Global.styles'
 import { StyledIndexPage } from '../components/styles/IndexPage.styles'
 
+import { Site } from '../types'
+
 const Home: NextPage = () => {
   const [selectedCity, setSelectedCity] = useState('')
   const [selectedArea, setSelectedArea] = useState('')
   const [cityCulSites, setCityCulSites] = useState([])
   const [areaCulSites, setAreaCulSites] = useState([])
-  const [site, setSite] = useState(null)
+  const [site, setSite] = useState<Site | null>(null)
   const [prevMarker, setPrevMarker] = useState(null)
   const [prevIcon, setPrevIcon] = useState(null)
   const [initData, setInitData] = useState([])
   const [isLoading, setIsLoading] = useState(false)
   const [shouldShowSiteInfo, setShouldShowSiteInfo] = useState(false)
 
-  const mapRef = useRef(null)
+  const mapRef = useRef<HTMLDivElement | null>(null)
   const markerRefs = useRef({})
 
   useEffect(() => {
@@ -50,7 +52,7 @@ const Home: NextPage = () => {
   if (isLoading) return <Loading />
   if (!initData) return <p>No profile data</p>
 
-  function format(data) {
+  function format(data: any[]) {
     return data.map((item) => {
       const {
         caseId,

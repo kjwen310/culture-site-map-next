@@ -1,12 +1,13 @@
-import { useEffect } from 'react'
+import React, { useEffect } from 'react'
 
 import { AiFillCaretDown } from "react-icons/ai"
 import cityName from '../assets/cityName.json'
+import { SelectBoxProps, Site } from '../types'
 
 import SiteCount from './SiteCount'
 import { StyledSelectBox, StyledSelectItem } from './styles/SelectBox.styles'
 
-const Select = ({
+const Select: React.FC<SelectBoxProps> = ({
   mapRef,
   cities,
   dataLen,
@@ -41,18 +42,18 @@ const Select = ({
     }
   }
 
-  const updateSelectCity = (e) => {
+  const updateSelectCity = (e: React.ChangeEvent<HTMLSelectElement>) => {
     e.preventDefault()
     setSelectedCity(e.target.value)
     setSelectedArea('')
   }
 
-  const updateSelectArea = (e) => {
+  const updateSelectArea = (e: React.ChangeEvent<HTMLSelectElement>) => {
     e.preventDefault()
     setSelectedArea(e.target.value)
   }
 
-  function setOverView(item) {
+  function setOverView(item: Site | null) {
     const zoomLevel = selectedArea === '' ? 10 : 13
     const doesHaveMap = mapRef && mapRef.current
     const doesValidItem = item && item.latitude && item.longitude
