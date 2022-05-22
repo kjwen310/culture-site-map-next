@@ -1,11 +1,11 @@
-import L from 'leaflet';
+import L from 'leaflet'
 
 const iconsConfig = {
   iconSize: [25, 41],
   iconAnchor: [12, 41],
   popupAnchor: [1, -34],
   shadowSize: [41, 41],
-};
+}
 
 export default {
   green: new L.Icon({

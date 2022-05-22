@@ -1,10 +1,10 @@
-import { SiteInfoContainer } from './styles/SiteInfo.styles';
-import { MdCloseFullscreen } from "react-icons/md";
+import { StyledSiteInfo } from './styles/SiteInfo.styles'
+import { MdCloseFullscreen } from "react-icons/md"
 
-const SiteInfo = ({ site, setIsShow, markerRefs }) => {
+const SiteInfo = ({ site, setShouldShowSiteInfo, markerRefs }) => {
 
   function handleClose(item) {
-    setIsShow(false)
+    setShouldShowSiteInfo(false)
     const currentMarker = markerRefs.current[item.caseId]
     currentMarker.closePopup()
   }
@@ -13,7 +13,7 @@ const SiteInfo = ({ site, setIsShow, markerRefs }) => {
     <>
       {
         site && (
-          <SiteInfoContainer>
+          <StyledSiteInfo>
             <div className="close-icon" onClick={() => handleClose(site)}>
               <MdCloseFullscreen />
             </div>
@@ -28,7 +28,7 @@ const SiteInfo = ({ site, setIsShow, markerRefs }) => {
               <p>{site.pastHistory}</p>
               <p>{site.buildingFeatures}</p>
             </div>
-          </SiteInfoContainer>
+          </StyledSiteInfo>
         )
       }
     </>

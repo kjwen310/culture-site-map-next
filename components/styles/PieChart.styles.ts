@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-export const PieContainer = styled.div`
+export const StyledPieChart = styled.div`
   width: 100%;
   height: 200px;
 

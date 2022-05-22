@@ -1,17 +1,19 @@
-import { SelectContainer, StyledSelect } from './styles/Select.styles'
-import { AiFillCaretDown } from "react-icons/ai";
-import cityName from '../assets/cityName.json';
-import { useEffect } from 'react';
-import SiteCount from './SiteCount';
+import { useEffect } from 'react'
+
+import { AiFillCaretDown } from "react-icons/ai"
+import cityName from '../assets/cityName.json'
+
+import SiteCount from './SiteCount'
+import { StyledSelectBox, StyledSelectItem } from './styles/SelectBox.styles'
 
 const Select = ({
   mapRef,
   cities,
   dataLen,
-  cityCulSite,
-  setCityCulSite,
-  culSite,
-  setCulSite,
+  cityCulSites,
+  setCityCulSites,
+  areaCulSites,
+  setAreaCulSites,
   selectedCity,
   selectedArea,
   setSelectedCity,
@@ -20,30 +22,33 @@ const Select = ({
   const targetCity = cityName.find((city) => city.CityName === selectedCity)
 
   useEffect(() => updateSelection(), [selectedCity, selectedArea])
+
   useEffect(() => {
-    if (selectedCity && selectedArea) setOverView(culSite[0])
-  }, [culSite])
+    if (selectedCity && selectedArea) setOverView(areaCulSites[0])
+  }, [areaCulSites])
   useEffect(() => {
-    if (selectedCity && !selectedArea) setOverView(cityCulSite[0])
-  }, [cityCulSite])
-  
+    if (selectedCity && !selectedArea) setOverView(cityCulSites[0])
+  }, [cityCulSites])
 
   const updateSelection = () => {
-    if (selectedCity !== '') {
-      setCityCulSite(cities[selectedCity].items)
+    if (selectedCity) {
+      setAreaCulSites([])
+      setCityCulSites(cities[selectedCity].items)
       if (selectedArea) {
-        const item = cityCulSite.filter((item) => item.belongCity.slice(3) === selectedArea)
-        setCulSite(item)
+        const items = cityCulSites.filter((item) => item.belongCity.slice(3) === selectedArea)
+        setAreaCulSites(items)
       }
     }
   }
 
-  function updateSelectCity(e) {
+  const updateSelectCity = (e) => {
+    e.preventDefault()
     setSelectedCity(e.target.value)
     setSelectedArea('')
   }
 
-  function updateSelectArea(e) {
+  const updateSelectArea = (e) => {
+    e.preventDefault()
     setSelectedArea(e.target.value)
   }
 
@@ -57,12 +62,12 @@ const Select = ({
   }
 
   return (
-    <SelectContainer>
+    <StyledSelectBox>
       <div className="wrapper">
-        <StyledSelect className="city">
+        <StyledSelectItem className="city">
           <label htmlFor="cityName">縣市</label>
           <div className="select-wrapper">
-            <select id="cityName" onChange={(e) => updateSelectCity(e)}>
+            <select id="cityName" value={selectedCity} onChange={updateSelectCity}>
               <option value="">-- 全國資料 --</option>
               {
                 cityName.map((city) => {
@@ -78,12 +83,12 @@ const Select = ({
               <AiFillCaretDown />
             </span>
           </div>
-        </StyledSelect>
-        <StyledSelect className="area">
+        </StyledSelectItem>
+        <StyledSelectItem className="area">
           <label htmlFor="area">鄉鎮市區</label>
           <div className="select-wrapper">
-            <select id="area" onChange={(e) => updateSelectArea(e)}>
-              <option value="" disabled={selectedCity === ''}>-- 全部區域 --</option>
+            <select id="area" value={selectedArea} onChange={updateSelectArea}>
+              <option value="">-- 全部區域 --</option>
               {
                 targetCity?.AreaList.map((area) => {
                   return (
@@ -98,16 +103,16 @@ const Select = ({
               <AiFillCaretDown />
             </span>
           </div>
-        </StyledSelect>
+        </StyledSelectItem>
       </div>
       <SiteCount
         dataLen={dataLen}
-        culSiteLen={culSite.length}
-        cityCulSiteLen={cityCulSite.length}
+        areaCulSiteLen={areaCulSites.length}
+        cityCulSiteLen={cityCulSites.length}
         selectedCity={selectedCity}
         selectedArea={selectedArea}
       />
-    </SelectContainer>
+    </StyledSelectBox>
   )
 }
 

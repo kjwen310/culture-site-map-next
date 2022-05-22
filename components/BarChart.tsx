@@ -1,5 +1,4 @@
-import React from 'react';
-import { BarContainer } from './styles/Bar.styles'
+import React from 'react'
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -8,8 +7,9 @@ import {
   Title,
   Tooltip,
   Legend,
-} from 'chart.js';
-import { Bar } from 'react-chartjs-2';
+} from 'chart.js'
+import { Bar } from 'react-chartjs-2'
+import { StyledBarChart } from './styles/BarChart.styles'
 
 ChartJS.register(
   CategoryScale,
@@ -84,9 +84,9 @@ const BarChart = ({ cities }) => {
   const data = updateBarChart(cities)
 
   return (
-    <BarContainer>
+    <StyledBarChart>
       <Bar options={options} data={data} />
-    </BarContainer>
+    </StyledBarChart>
   )
 }
 

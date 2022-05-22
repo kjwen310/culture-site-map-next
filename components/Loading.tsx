@@ -1,19 +1,9 @@
-import ReactLoading from 'react-loading';
-import { LoadingContainer } from './styles/Loading.styles'
+import ReactLoading from 'react-loading'
+import { StyledLoading } from './styles/Loading.styles'
 
-const Loading = ({
-  markerRefs,
-  mapRef,
-  prevMarker,
-  setPrevMarker,
-  prevIcon,
-  setPrevIcon,
-  culSite,
-  setSite,
-  setIsShow,
-}) => {
+const Loading = () => {
   return (
-    <LoadingContainer>
+    <StyledLoading>
       <div className="wrapper">
         <ReactLoading
           type={'spinningBubbles'}
@@ -23,7 +13,7 @@ const Loading = ({
           className="loading"
         />
       </div>
-    </LoadingContainer>
+    </StyledLoading>
   )
 }
 

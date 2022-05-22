@@ -1,14 +1,13 @@
-import { createPathComponent } from '@react-leaflet/core';
-import L from 'leaflet';
-import 'leaflet.markercluster/dist/MarkerCluster.css';
-import 'leaflet.markercluster/dist/MarkerCluster.Default.css';
-
+import { createPathComponent } from '@react-leaflet/core'
+import L from 'leaflet'
+import 'leaflet.markercluster/dist/MarkerCluster.css'
+import 'leaflet.markercluster/dist/MarkerCluster.Default.css'
 import 'leaflet.markercluster'
 
 const MarkerClusterGroup = createPathComponent(
   ({ children: _c, ...props }, ctx) => {
-    const clusterProps = {};
-    const clusterEvents = {};
+    const clusterProps = {}
+    const clusterEvents = {}
 
     // Splitting props and events to different objects
     Object.entries(props).forEach(([propName, prop]) =>
@@ -18,13 +17,13 @@ const MarkerClusterGroup = createPathComponent(
     );
 
     // Creating markerClusterGroup Leaflet element
-    const markerClusterGroup = new L.markerClusterGroup(clusterProps);
+    const markerClusterGroup = new L.markerClusterGroup(clusterProps)
 
     // Initializing event listeners
     Object.entries(clusterEvents).forEach(([eventAsProp, callback]) => {
-      const clusterEvent = `cluster${eventAsProp.substring(2).toLowerCase()}`;
-      markerClusterGroup.on(clusterEvent, callback);
-    });
+      const clusterEvent = `cluster${eventAsProp.substring(2).toLowerCase()}`
+      markerClusterGroup.on(clusterEvent, callback)
+    })
 
     return {
       instance: markerClusterGroup,
@@ -33,4 +32,4 @@ const MarkerClusterGroup = createPathComponent(
   }
 );
 
-export default MarkerClusterGroup;
+export default MarkerClusterGroup

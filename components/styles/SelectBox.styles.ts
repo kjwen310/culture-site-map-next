@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-export const SelectContainer = styled.div`
+export const StyledSelectBox = styled.div`
   position: absolute;
   top: 20px;
   left: 20px;
@@ -29,7 +29,7 @@ export const SelectContainer = styled.div`
   }
 `
 
-export const StyledSelect = styled.div`
+export const StyledSelectItem = styled.div`
   display: block;
   
   label {

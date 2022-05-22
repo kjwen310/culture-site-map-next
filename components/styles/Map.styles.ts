@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-export const StyledMapContainer = styled.div`
+export const StyledMap = styled.div`
   width: 100vw;
   height: 100vh;
 
@@ -22,7 +22,7 @@ export const StyledMapContainer = styled.div`
   }
 `
 
-export const PopupContainer = styled.div`
+export const StyledPopup = styled.div`
   width: 240px;
   height: 180px;
   padding-top: 6px;

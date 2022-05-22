@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-export const SiteCountContainer = styled.div`
+export const StyledSiteCount = styled.div`
   text-align: right;
   margin: 12px 0 0;
 

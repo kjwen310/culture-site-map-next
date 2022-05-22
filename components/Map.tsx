@@ -1,9 +1,11 @@
 import { useState } from "react"
+import Image from 'next/image'
+
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet"
 import MarkerClusterGroup from "./MapCluster"
-import { StyledMapContainer, PopupContainer } from './styles/Map.styles'
-import icons from '../assets/icons'
-import Image from 'next/image'
+import { StyledMap, StyledPopup } from './styles/Map.styles'
+import icons from '../utils/icons'
+
 import 'leaflet/dist/leaflet.css'
 import 'leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css'
 import 'leaflet-defaulticon-compatibility'
@@ -16,7 +18,7 @@ const Map = ({
   setPrevIcon,
   markerRefs,
   data,
-  setIsShow,
+  setShouldShowSiteInfo,
   setSite,
 }) => {
 
@@ -27,12 +29,12 @@ const Map = ({
     if (prevMarker) prevMarker.setIcon(prevIcon)
     if (currentMarker.getIcon() === icons.red) {
       setPrevMarker(null)
-      setIsShow(false)
+      setShouldShowSiteInfo(false)
     } else {
       setPrevMarker(currentMarker)
       setPrevIcon(currentMarker.getIcon())
       currentMarker.setIcon(icons.red)
-      setIsShow(true)
+      setShouldShowSiteInfo(true)
       const zoomLevel = 18
       const correction = 0.0006
       mapRef.current.flyTo([item.latitude + correction, item.longitude], zoomLevel, {
@@ -42,7 +44,7 @@ const Map = ({
   }
 
   return (
-    <StyledMapContainer>
+    <StyledMap>
       <MapContainer
         id="map"
         ref={mapRef}
@@ -76,15 +78,15 @@ const Map = ({
                     click: () => handleSetView(item),
                   }}
                 >
-                  <Popup closeButton={true}>
-                    <PopupContainer>
+                  <Popup closeButton={true} autoPan={false}>
+                    <StyledPopup>
                       {
                         item.representImage
                         ? <Image src={item.representImage} alt={item.caseName} layout="fill" />
                         : <p>無影像資料</p>
                       }
                       <h4>{item.caseName}</h4>
-                    </PopupContainer>
+                    </StyledPopup>
                   </Popup>
                 </Marker>
               )
@@ -93,7 +95,7 @@ const Map = ({
         </MarkerClusterGroup>
     
       </MapContainer>
-    </StyledMapContainer>
+    </StyledMap>
   )
 }
 

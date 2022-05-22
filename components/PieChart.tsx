@@ -1,7 +1,9 @@
-import React from 'react';
-import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
-import { Pie } from 'react-chartjs-2';
-import { PieContainer } from './styles/Pie.styles'
+import React from 'react'
+import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js'
+import { Pie } from 'react-chartjs-2'
+
+import { StyledPieChart } from './styles/PieChart.styles'
+import { siteTypes } from '../constants'
 
 ChartJS.register(ArcElement, Tooltip, Legend)
 
@@ -21,35 +23,13 @@ const options = {
   },
 }
 
-const siteTypes = [
-  { type: '宅第', num: 0, color: '#F2A074' },
-  { type: '關塞', num: 0, color: '#EAA568' },
-  { type: '寺廟', num: 0, color: '#DFAA5F' },
-  { type: '城郭', num: 0, color: '#D0B05A' },
-  { type: '祠堂', num: 0, color: '#C0B659' },
-  { type: '衙署', num: 0, color: '#ADBB5E' },
-  { type: '車站', num: 0, color: '#98C068' },
-  { type: '書院', num: 0, color: '#82C376' },
-  { type: '碑碣', num: 0, color: '#6BC687' },
-  { type: '教堂', num: 0, color: '#52C89A' },
-  { type: '牌坊', num: 0, color: '#39C8AF' },
-  { type: '墓葬', num: 0, color: '#26C7C2' },
-  { type: '堤閘', num: 0, color: '#2CC5D5' },
-  { type: '產業', num: 0, color: '#49C1E3' },
-  { type: '燈塔', num: 0, color: '#6CBCEE' },
-  { type: '橋梁', num: 0, color: '#8FB5F3' },
-  { type: '學校', num: 0, color: '#B2ACF2' },
-  { type: '銀行', num: 0, color: '#D2A1EA' },
-  { type: '其他設施', num: 0, color: '#EE96DD' },
-]
-
-function updatePieData(cityCulSite) {
+function updatePieData(cityCulSites) {
   let counter = 0
   const aimData = []
   const aimColor = []
   const aimLabel = []
 
-  cityCulSite.forEach((item) => {
+  cityCulSites.forEach((item) => {
     siteTypes.forEach((siteType) => {
       if (item.assetsTypes[0].name === siteType.type) {
         siteType.num += 1;
@@ -64,7 +44,7 @@ function updatePieData(cityCulSite) {
     aimLabel.push(aim.type)
   })
 
-  aimData.push(cityCulSite.length - counter)
+  aimData.push(cityCulSites.length - counter)
   aimColor.push('#D3D3D3')
   aimLabel.push('其他')
   const data = {
@@ -82,13 +62,13 @@ function updatePieData(cityCulSite) {
   return data
 }
 
-const PieChart = ({ cityCulSite }) => {
-  const data = updatePieData(cityCulSite)
+const PieChart = ({ cityCulSites }) => {
+  const data = updatePieData(cityCulSites)
 
   return (
-    <PieContainer>
+    <StyledPieChart>
       <Pie options={options} data={data} />
-    </PieContainer>
+    </StyledPieChart>
   )
 }
 

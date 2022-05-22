@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-export const SiteInfoContainer = styled.div`
+export const StyledSiteInfo = styled.div`
   position: absolute;
   top: 36px;
   bottom: 0;

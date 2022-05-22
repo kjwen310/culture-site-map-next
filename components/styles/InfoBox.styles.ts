@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-export const InfoContainer = styled.div`
+export const StyledInfoBox = styled.div`
   position: absolute;
   bottom: 0;
   left: 20px;

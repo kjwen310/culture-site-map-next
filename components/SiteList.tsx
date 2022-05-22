@@ -1,5 +1,5 @@
-import { SiteListContainer } from './styles/SiteList.styles'
-import icons from '../assets/icons'
+import { StyledSiteList } from './styles/SiteList.styles'
+import icons from '../utils/icons'
 
 const SiteList = ({
   markerRefs,
@@ -8,9 +8,9 @@ const SiteList = ({
   setPrevMarker,
   prevIcon,
   setPrevIcon,
-  culSite,
+  areaCulSites,
   setSite,
-  setIsShow,
+  setShouldShowSiteInfo,
 }) => {
 
   function handleSetView(item) {
@@ -20,15 +20,15 @@ const SiteList = ({
     if (prevMarker) prevMarker.setIcon(prevIcon)
     if (currentMarker.getIcon() === icons.red) {
       setPrevMarker(null)
-      setIsShow(false)
+      setShouldShowSiteInfo(false)
     } else {
       setPrevMarker(currentMarker)
       setPrevIcon(currentMarker.getIcon())
       currentMarker.setIcon(icons.red)
-      setIsShow(true)
+      setShouldShowSiteInfo(true)
       const zoomLevel = 18
-      const correction = 0.006
-      mapRef.current.flyTo([item.latitude + correction, item.longitude], zoomLevel, {
+      const correction = 0.0006
+      mapRef.current.setView([item.latitude + correction, item.longitude], zoomLevel, {
         duration: 0.5
       })
     }
@@ -37,9 +37,9 @@ const SiteList = ({
   }
 
   return (
-    culSite && culSite.length && <SiteListContainer>
+    areaCulSites && areaCulSites.length && <StyledSiteList>
       {
-        culSite.map((item) => {
+        areaCulSites.map((item) => {
           return (
             <li key={item.caseId} onClick={() => handleSetView(item)}>
               <h3>{item.caseName}</h3>
@@ -54,7 +54,7 @@ const SiteList = ({
           )
         })
       }
-    </SiteListContainer>
+    </StyledSiteList>
   )
 }
 

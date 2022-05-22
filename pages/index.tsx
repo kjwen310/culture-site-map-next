@@ -1,103 +1,120 @@
+import React, { useState,useEffect, useRef } from 'react'
 import type { NextPage } from 'next'
 import dynamic from "next/dynamic"
-import React, { useState,useEffect, useRef } from 'react'
-import axios from 'axios';
-import addInfo from '../assets/addInfo.json';
-import posCorrection from '../assets/posCorrection.json';
 import Head from 'next/head'
-import { ResetStyle, GlobalStyle } from '../components/styles/Global.styles';
-import Select from '../components/Select';
-import Loading from '../components/Loading';
-import { AppContainer } from '../components/styles/App.styles'
-const Info = dynamic(() => import("../components/Info"), { ssr: false})
+
+import axios from 'axios'
+import addInfo from '../assets/addInfo.json'
+import posCorrection from '../assets/posCorrection.json'
+import { cities, noDataList } from '../constants'
+
+import SelectBox from '../components/SelectBox'
+import Loading from '../components/Loading'
+const InfoBox = dynamic(() => import("../components/InfoBox"), { ssr: false})
 const Map = dynamic(() => import("../components/Map"), { ssr:false })
+
+import { ResetStyle, GlobalStyle } from '../components/styles/Global.styles'
+import { StyledIndexPage } from '../components/styles/IndexPage.styles'
 
 const Home: NextPage = () => {
   const [selectedCity, setSelectedCity] = useState('')
   const [selectedArea, setSelectedArea] = useState('')
-  const [cityCulSite, setCityCulSite] = useState([])
-  const [culSite, setCulSite] = useState([])
-
-  const [initData, setInitData] = useState(null)
-  const [isLoading, setLoading] = useState(false)
-
-  const [isShow, setIsShow] = useState(false)
+  const [cityCulSites, setCityCulSites] = useState([])
+  const [areaCulSites, setAreaCulSites] = useState([])
   const [site, setSite] = useState(null)
+  const [prevMarker, setPrevMarker] = useState(null)
+  const [prevIcon, setPrevIcon] = useState(null)
+  const [initData, setInitData] = useState([])
+  const [isLoading, setIsLoading] = useState(false)
+  const [shouldShowSiteInfo, setShouldShowSiteInfo] = useState(false)
 
   const mapRef = useRef(null)
   const markerRefs = useRef({})
 
-  const [prevMarker, setPrevMarker] = useState(null)
-  const [prevIcon, setPrevIcon] = useState(null)
-
-  const cities = {
-    '臺北市': { nationalNum: 0, items: [] },
-    '新北市': { nationalNum: 0, items: [] },
-    '基隆市': { nationalNum: 0, items: [] },
-    '桃園市': { nationalNum: 0, items: [] },
-    '新竹縣': { nationalNum: 0, items: [] },
-    '新竹市': { nationalNum: 0, items: [] },
-    '苗栗縣': { nationalNum: 0, items: [] },
-    '臺中市': { nationalNum: 0, items: [] },
-    '彰化縣': { nationalNum: 0, items: [] },
-    '南投縣': { nationalNum: 0, items: [] },
-    '雲林縣': { nationalNum: 0, items: [] },
-    '嘉義縣': { nationalNum: 0, items: [] },
-    '嘉義市': { nationalNum: 0, items: [] },
-    '臺南市': { nationalNum: 0, items: [] },
-    '高雄市': { nationalNum: 0, items: [] },
-    '屏東縣': { nationalNum: 0, items: [] },
-    '宜蘭縣': { nationalNum: 0, items: [] },
-    '花蓮縣': { nationalNum: 0, items: [] },
-    '臺東縣': { nationalNum: 0, items: [] },
-    '澎湖縣': { nationalNum: 0, items: [] },
-    '金門縣': { nationalNum: 0, items: [] },
-    '連江縣': { nationalNum: 0, items: [] },
-  }
-
   useEffect(() => {
-    setLoading(true)
+    setIsLoading(true)
     axios.get('api/data')
       .then((data) => {
-        setInitData(data.data)
-        setLoading(false)
+        const formatedData = format(data.data)
+        const filteredData = init(formatedData)
+        addCitiesData(filteredData)
+        setInitData(filteredData)
+        setIsLoading(false)
+      })
+      .catch((err) => {
+        console.log(err)
+        setIsLoading(false)
       })
   }, [])
 
   if (isLoading) return <Loading />
   if (!initData) return <p>No profile data</p>
 
-  const noDataList = ['20180206000001', '20191128000001', '19881111000011', '19870417000002']
+  function format(data) {
+    return data.map((item) => {
+      const {
+        caseId,
+        caseName,
+        latitude,
+        longitude,
+        belongCity,
+        belongAddress,
+        assetsClassifyName,
+        representImage,
+        pastHistory,
+        buildingFeatures,
+        assetsTypes,
+      } = item || {}
 
-  const filteredData = initData.filter((item) => !noDataList.includes(item.caseId) && item.latitude && item.longitude)
-
-  filteredData.forEach((item) => {
-    posCorrection.forEach((pos) => {
-      if (item.caseId === pos.id) {
-        item.latitude = pos.lat;
-        item.longitude = pos.lng;
+      return {
+        caseId,
+        caseName,
+        latitude,
+        longitude,
+        belongCity,
+        belongAddress,
+        assetsClassifyName,
+        representImage,
+        pastHistory,
+        buildingFeatures,
+        assetsTypes,
       }
     })
-    addInfo.forEach((add) => {
-      if (item.caseId === add.id) {
-        item.latitude = add.lat;
-        item.longitude = add.lng;
-        item.pastHistory = add.pastHistory;
-        item.buildingFeatures = add.buildingFeatures;
-      }
+  }
+
+  function init(data) {
+    const filteredData = data.filter(
+      (item) => !noDataList.includes(item.caseId) && item.latitude && item.longitude
+    )
+
+    filteredData.forEach((item) => {
+      posCorrection.forEach((pos) => {
+        if (item.caseId === pos.id) {
+          item.latitude = pos.lat;
+          item.longitude = pos.lng;
+        }
+      })
+      addInfo.forEach((add) => {
+        if (item.caseId === add.id) {
+          item.latitude = add.lat;
+          item.longitude = add.lng;
+          item.pastHistory = add.pastHistory;
+          item.buildingFeatures = add.buildingFeatures;
+        }
+      })
     })
 
-    addCitiesData(item)
-  })
+    return filteredData
+  }
 
-  function addCitiesData(item) {
-    const targetCity = item.belongCity.slice(0, 3) || ''
-
-    if (item.assetsClassifyName === '國定古蹟') {
-      cities[targetCity]?.nationalNum += 1
-    }
-
-    cities[targetCity]?.items?.push(item)
+  function addCitiesData(filteredData) {
+    filteredData.forEach((item) => {
+      const targetCity = item.belongCity.slice(0, 3) || ''
+      if (cities && cities[targetCity]) {
+        if (item.assetsClassifyName === '國定古蹟') cities[targetCity].nationalNum += 1
+        cities[targetCity].items?.push(item)
+      }
+    })
   }
 
   return (
@@ -109,49 +126,49 @@ const Home: NextPage = () => {
         <meta name="description" content="Generated by create next app" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <AppContainer>
-        <Select
+      <StyledIndexPage>
+        <SelectBox
           mapRef={mapRef}
           cities={cities}
-          dataLen={filteredData.length}
-          cityCulSite={cityCulSite}
-          setCityCulSite={setCityCulSite}
-          culSite={culSite}
-          setCulSite={setCulSite}
           selectedCity={selectedCity}
-          setSelectedCity={setSelectedCity}
           selectedArea={selectedArea}
+          cityCulSites={cityCulSites}
+          areaCulSites={areaCulSites}
+          dataLen={initData.length}
+          setCityCulSites={setCityCulSites}
+          setAreaCulSites={setAreaCulSites}
+          setSelectedCity={setSelectedCity}
           setSelectedArea={setSelectedArea}
         />
-        <Info
+        <InfoBox
           mapRef={mapRef}
           markerRefs={markerRefs}
-          prevMarker={prevMarker}
-          setPrevMarker={setPrevMarker}
-          prevIcon={prevIcon}
-          setPrevIcon={setPrevIcon}
-          isShow={isShow}
-          setIsShow={setIsShow}
-          site={site}
-          setSite={setSite}
           cities={cities}
-          cityCulSite={cityCulSite}
-          culSite={culSite}
           selectedCity={selectedCity}
           selectedArea={selectedArea}
+          site={site}
+          cityCulSites={cityCulSites}
+          areaCulSites={areaCulSites}
+          prevMarker={prevMarker}
+          prevIcon={prevIcon}
+          shouldShowSiteInfo={shouldShowSiteInfo}
+          setPrevMarker={setPrevMarker}
+          setPrevIcon={setPrevIcon}
+          setShouldShowSiteInfo={setShouldShowSiteInfo}
+          setSite={setSite}
         />
         <Map
           mapRef={mapRef}
           markerRefs={markerRefs}
           prevMarker={prevMarker}
-          setPrevMarker={setPrevMarker}
           prevIcon={prevIcon}
-          setPrevIcon={setPrevIcon}
-          data={filteredData}
-          setIsShow={setIsShow}
+          data={initData}
+          setShouldShowSiteInfo={setShouldShowSiteInfo}
           setSite={setSite}
+          setPrevMarker={setPrevMarker}
+          setPrevIcon={setPrevIcon}
         />
-      </AppContainer>
+      </StyledIndexPage>
     </>
   )
 }
