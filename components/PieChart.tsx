@@ -21,7 +21,7 @@ function updatePieData(cityCulSites: Site[]) {
 
   cityCulSites.forEach((item: Site) => {
     siteTypes.forEach((siteType) => {
-      if (item.assetsTypes[0].name === siteType.type) {
+      if (item && item.assetsTypes[0].name === siteType.type) {
         siteType.num += 1;
       }
     })

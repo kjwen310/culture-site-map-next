@@ -16,17 +16,17 @@ const Map = dynamic(() => import("../components/Map"), { ssr:false })
 import { ResetStyle, GlobalStyle } from '../components/styles/Global.styles'
 import { StyledIndexPage } from '../components/styles/IndexPage.styles'
 
-import { Site } from '../types'
+import { Site, Cities } from '../types'
 
 const Home: NextPage = () => {
   const [selectedCity, setSelectedCity] = useState('')
   const [selectedArea, setSelectedArea] = useState('')
-  const [cityCulSites, setCityCulSites] = useState([])
-  const [areaCulSites, setAreaCulSites] = useState([])
+  const [cityCulSites, setCityCulSites] = useState([null])
+  const [areaCulSites, setAreaCulSites] = useState([null])
   const [site, setSite] = useState<Site | null>(null)
   const [prevMarker, setPrevMarker] = useState(null)
   const [prevIcon, setPrevIcon] = useState(null)
-  const [initData, setInitData] = useState([])
+  const [initData, setInitData] = useState<any[]>([])
   const [isLoading, setIsLoading] = useState(false)
   const [shouldShowSiteInfo, setShouldShowSiteInfo] = useState(false)
 
@@ -39,7 +39,7 @@ const Home: NextPage = () => {
       .then((data) => {
         const formatedData = format(data.data)
         const filteredData = init(formatedData)
-        addCitiesData(filteredData)
+        addCitiesData(filteredData, cities)
         setInitData(filteredData)
         setIsLoading(false)
       })
@@ -52,39 +52,41 @@ const Home: NextPage = () => {
   if (isLoading) return <Loading />
   if (!initData) return <p>No profile data</p>
 
-  function format(data: any[]) {
+  function format(data: any[]): Site[] {
     return data.map((item) => {
       const {
         caseId,
         caseName,
-        latitude,
-        longitude,
+        registerDate,
+        pastHistory,
+        buildingFeatures,
         belongCity,
         belongAddress,
         assetsClassifyName,
         representImage,
-        pastHistory,
-        buildingFeatures,
+        latitude,
+        longitude,
         assetsTypes,
       } = item || {}
 
       return {
         caseId,
         caseName,
-        latitude,
-        longitude,
+        registerDate,
+        pastHistory,
+        buildingFeatures,
         belongCity,
         belongAddress,
         assetsClassifyName,
         representImage,
-        pastHistory,
-        buildingFeatures,
+        latitude,
+        longitude,
         assetsTypes,
       }
     })
   }
 
-  function init(data) {
+  function init(data: Site[]) {
     const filteredData = data.filter(
       (item) => !noDataList.includes(item.caseId) && item.latitude && item.longitude
     )
@@ -109,7 +111,7 @@ const Home: NextPage = () => {
     return filteredData
   }
 
-  function addCitiesData(filteredData) {
+  function addCitiesData(filteredData: Site[], cities: Cities) {
     filteredData.forEach((item) => {
       const targetCity = item.belongCity.slice(0, 3) || ''
       if (cities && cities[targetCity]) {

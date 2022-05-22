@@ -21,10 +21,10 @@ export interface Cities {
 
 export interface InfoBoxProps extends BasicInfoAndMapProps {
   shouldShowSiteInfo: boolean,
-  site: Site,
+  site: Site | null,
   cities: Cities,
-  cityCulSites: Site[],
-  areaCulSites: Site[],
+  cityCulSites: Site[] | any[],
+  areaCulSites: Site[] | any[],
   selectedCity: string,
   selectedArea: string,
 }
@@ -41,14 +41,14 @@ export interface SelectBoxProps {
   mapRef: any,
   cities: Cities,
   dataLen: number,
-  cityCulSites: Site[],
-  areaCulSites: Site[],
+  cityCulSites: Site[] | any[],
+  areaCulSites: Site[] | any[],
   selectedCity: string,
   selectedArea: string,
   setSelectedCity: Dispatch<SetStateAction<string>>,
   setSelectedArea: Dispatch<SetStateAction<string>>,
-  setCityCulSites: Dispatch<SetStateAction<Site[] | null>>,
-  setAreaCulSites: Dispatch<SetStateAction<Site[] | null>>,
+  setCityCulSites: Dispatch<SetStateAction<any[]>>,
+  setAreaCulSites: Dispatch<SetStateAction<any[]>>,
 }
 
 export interface SiteCountProps {
@@ -61,7 +61,7 @@ export interface SiteCountProps {
 
 export interface SiteInfoProps {
   markerRefs: any,
-  site: Site,
+  site: Site | null,
   setShouldShowSiteInfo: Dispatch<SetStateAction<boolean>>,
 }
 
@@ -70,7 +70,7 @@ export interface BarChartProps {
 }
 
 export interface PieChartProps {
-  cityCulSites: Site[],
+  cityCulSites: Site[] | any[],
 }
 
 interface BasicInfoAndMapProps {
@@ -80,7 +80,7 @@ interface BasicInfoAndMapProps {
   prevIcon: any,
   setPrevMarker: Dispatch<SetStateAction<any>>,
   setPrevIcon: Dispatch<SetStateAction<any>>,
-  setSite: Dispatch<SetStateAction<Site>>,
+  setSite: Dispatch<SetStateAction<Site | null>>,
   setShouldShowSiteInfo: Dispatch<SetStateAction<boolean>>,
 }
 
