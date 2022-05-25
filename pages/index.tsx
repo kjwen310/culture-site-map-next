@@ -8,8 +8,8 @@ import addInfo from '../assets/addInfo.json'
 import posCorrection from '../assets/posCorrection.json'
 import { cities, noDataList, metaInfo } from '../constants'
 
-import SelectBox from '../components/SelectBox'
 import Loading from '../components/Loading'
+const SelectBox = dynamic(() => import('../components/SelectBox'), { ssr: false })
 const InfoBox = dynamic(() => import("../components/InfoBox"), { ssr: false})
 const Map = dynamic(() => import("../components/Map"), { ssr:false })
 

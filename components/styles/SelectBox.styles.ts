@@ -86,10 +86,12 @@ export const StyledSelectItem = styled.div`
     .select-wrapper {
       select {
         font-size: 16px;
+        padding: 4px 20px 4px 4px;
       }
 
       .icon {
         font-size: 12px;
+        width: 16px;
       }
     }
 
