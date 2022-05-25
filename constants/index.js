@@ -51,3 +51,10 @@ export const noDataList = [
   '19881111000011',
   '19870417000002',
 ]
+
+export const metaInfo = {
+   title: '古蹟導覽地圖',
+   desc: '台灣古蹟資訊視覺化工具，可查詢個別古蹟詳細資訊、位置分布，及各縣市古蹟數量與種類。',
+   image: '/default.jpg',
+   siteUrl: 'https://culture-site-map-next.vercel.app/',
+}
