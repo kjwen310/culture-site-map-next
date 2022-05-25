@@ -5,7 +5,7 @@ export const StyledSelectBox = styled.div`
   top: 20px;
   left: 20px;
   right: 20px;
-  height: 148px;
+  height: 176px;
   display: block;
   background-color: rgba(275, 275, 275, 0.8);
   border-radius: 4px;
@@ -36,7 +36,7 @@ export const StyledSelectItem = styled.div`
     font-size: 12px;
     line-height: 1.5;
     letter-spacing: 0.01em;
-    margin: 0 12px 0 0;
+    margin-bottom: 12px;
   }
 
   .select-wrapper {
@@ -45,8 +45,8 @@ export const StyledSelectItem = styled.div`
     border-radius: 4px;
 
     select {
-      font-size: 12px;
-      padding: 4px 20px 4px 4px;
+      font-size: 16px;
+      padding: 8px 20px 8px 8px;
       background-color: transparent;
       color: rgba(0, 0, 0, 0.6);
       border: 0;
@@ -61,10 +61,10 @@ export const StyledSelectItem = styled.div`
       position: absolute;
       top: 0;
       right: 0;
-      font-size: 12px;
+      font-size: 16px;
       background-color: rgba(0, 0, 0, 0.1);
       height: 100%;
-      width: 16px;
+      width: 32px;
       pointer-events: none;
       cursor: pointer;
     }
@@ -80,6 +80,7 @@ export const StyledSelectItem = styled.div`
 
     label {
       font-size: 16px;
+      margin: 0 12px 0 0;
     }
   
     .select-wrapper {

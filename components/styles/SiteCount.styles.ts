@@ -5,7 +5,7 @@ export const StyledSiteCount = styled.div`
   margin: 12px 0 0;
 
   span {
-    font-size: 10px;
+    font-size: 12px;
     letter-spacing: 0.01em;
     color: rgba(0, 0, 0, 0.6);
   }
@@ -19,7 +19,7 @@ export const StyledSiteCount = styled.div`
   }
 
   .count {
-    font-size: 18px;
+    font-size: 20px;
     line-height: 1;
     letter-spacing: 0.01em;
     color: rgba(0, 0, 0, 0.75);
