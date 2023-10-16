@@ -8,7 +8,7 @@ const nextConfig = {
     return [
       {
         source: '/api/data',
-        destination: 'https://data.boch.gov.tw/data/opendata/v2/assetsCase/1.1.json',
+        destination: 'https://data.boch.gov.tw/opendata/v2/assetsCase/1.1.json',
       },
     ]
   },
