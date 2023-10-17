@@ -22,7 +22,9 @@ const Select: React.FC<SelectBoxProps> = ({
 }) => {
   const targetCity = cityName.find((city) => city.CityName === selectedCity)
 
-  useEffect(() => updateSelection(), [selectedCity, selectedArea])
+  useEffect(() => {
+    updateSelection()
+  }, [selectedCity, selectedArea])
 
   useEffect(() => {
     if (selectedCity && selectedArea) setOverView(areaCulSites[0])

@@ -34,19 +34,28 @@ const Home: NextPage = () => {
   const markerRefs = useRef({})
 
   useEffect(() => {
+    const abortController = new AbortController()
+    const signal = abortController.signal
+
     setIsLoading(true)
-    axios.get('api/data')
+
+    axios.get('api/data', { signal })
       .then((data) => {
-        const formatedData = format(data.data)
-        const filteredData = init(formatedData)
+        const formattedData = format(data.data)
+        const filteredData = init(formattedData)
         addCitiesData(filteredData, cities)
         setInitData(filteredData)
-        setIsLoading(false)
       })
       .catch((err) => {
-        console.log(err)
+        console.log('[FETCH_ERR:]', err)
+      })
+      .finally(() => {
         setIsLoading(false)
       })
+    
+    return () => {
+      abortController.abort()
+    }
   }, [])
 
   if (isLoading) return <Loading />
@@ -57,7 +66,7 @@ const Home: NextPage = () => {
       const {
         caseId,
         caseName,
-        registerDate,
+        announcementList,
         pastHistory,
         buildingFeatures,
         addresses,
@@ -71,7 +80,7 @@ const Home: NextPage = () => {
       return {
         caseId,
         caseName,
-        registerDate,
+        announcementList,
         pastHistory,
         buildingFeatures,
         addresses,

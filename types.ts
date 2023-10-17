@@ -16,10 +16,16 @@ export interface RepresentImage {
   },
 }
 
+export interface Announcement {
+  classification: string,
+  officialDocNo: string,
+  registerDate: string,
+}
+
 export interface Site {
   caseId: string,
   caseName: string,
-  registerDate: string,
+  announcementList: Announcement[],
   pastHistory: string,
   buildingFeatures: string,
   addresses: Address[],

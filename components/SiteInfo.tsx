@@ -15,6 +15,10 @@ const SiteInfo: React.FC<SiteInfoProps> = ({
     currentMarker.closePopup()
   }
 
+  function formatDate(dateStr: String) {
+    return dateStr.split(' ')[0];
+  }
+
   return (
     <>
       {
@@ -28,7 +32,7 @@ const SiteInfo: React.FC<SiteInfoProps> = ({
               <li>分級：{site.assetsClassifyName}</li>
               <li>地點：{site.addresses[0].cityName}</li>
               <li>種類：{site.assetsTypes[0].name}</li>
-              <li>公告日期：{site.registerDate}</li>
+              <li>公告日期：{formatDate(site.announcementList[0].registerDate)}</li>
             </ul>
             <div className="content">
               <p>{site.pastHistory}</p>
