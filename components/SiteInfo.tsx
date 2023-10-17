@@ -26,7 +26,7 @@ const SiteInfo: React.FC<SiteInfoProps> = ({
             <h2>{site.caseName}</h2>
             <ul>
               <li>分級：{site.assetsClassifyName}</li>
-              <li>地點：{site.belongCity}</li>
+              <li>地點：{site.addresses[0].cityName}</li>
               <li>種類：{site.assetsTypes[0].name}</li>
               <li>公告日期：{site.registerDate}</li>
             </ul>

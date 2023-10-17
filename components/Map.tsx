@@ -78,7 +78,7 @@ const Map: React.FC<MapProps> = ({
                     <StyledPopup>
                       {
                         item.representImage
-                        ? <Image src={item.representImage} alt={item.caseName} layout="fill" />
+                        ? <Image src={item.representImage.transform.c} alt={item.representImage.name} layout="fill" />
                         : <p>無影像資料</p>
                       }
                       <h4>{item.caseName}</h4>

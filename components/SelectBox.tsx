@@ -36,7 +36,7 @@ const Select: React.FC<SelectBoxProps> = ({
       setAreaCulSites([])
       setCityCulSites(cities[selectedCity].items)
       if (selectedArea) {
-        const items = cityCulSites.filter((item) => item.belongCity.slice(3) === selectedArea)
+        const items = cityCulSites.filter((item) => item.addresses[0].distName === selectedArea)
         setAreaCulSites(items)
       }
     }

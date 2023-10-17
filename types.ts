@@ -1,15 +1,30 @@
 import { Dispatch, SetStateAction } from 'react'
 
+export interface Address {
+  itemNo: number,
+  cityName: string,
+  distName: string,
+  address: string,
+}
+
+export interface RepresentImage {
+  ext: string,
+  name: string,
+  original: string,
+  transform: {
+    c: string,
+  },
+}
+
 export interface Site {
   caseId: string,
   caseName: string,
   registerDate: string,
   pastHistory: string,
   buildingFeatures: string,
-  belongCity: string,
-  belongAddress: string,
+  addresses: Address[],
   assetsClassifyName: string,
-  representImage: string | undefined | null,
+  representImage: RepresentImage,
   latitude: number,
   longitude: number,
   assetsTypes: AssetsTypesItem[],

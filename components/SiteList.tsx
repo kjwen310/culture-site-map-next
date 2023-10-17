@@ -49,9 +49,9 @@ const SiteList: React.FC<SiteListProps> = ({
                   <p>分級：{item.assetsClassifyName}</p>
                   <p>種類：{item.assetsTypes[0].name}</p>
                   <p>
-                    位址：<a href={`https://www.google.com.tw/maps/place/${item.belongAddress}`}
+                    位址：<a href={`https://www.google.com.tw/maps/place/${item.addresses[0].address}`}
                           target="_blank" rel="noreferrer noopener" title="Google Map">
-                          {item.belongAddress}</a>
+                          {item.addresses[0].address}</a>
                   </p>
                 </li>
               )

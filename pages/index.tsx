@@ -60,8 +60,7 @@ const Home: NextPage = () => {
         registerDate,
         pastHistory,
         buildingFeatures,
-        belongCity,
-        belongAddress,
+        addresses,
         assetsClassifyName,
         representImage,
         latitude,
@@ -75,8 +74,7 @@ const Home: NextPage = () => {
         registerDate,
         pastHistory,
         buildingFeatures,
-        belongCity,
-        belongAddress,
+        addresses,
         assetsClassifyName,
         representImage,
         latitude,
@@ -113,7 +111,7 @@ const Home: NextPage = () => {
 
   function addCitiesData(filteredData: Site[], cities: Cities) {
     filteredData.forEach((item) => {
-      const targetCity = item.belongCity.slice(0, 3) || ''
+      const targetCity = item.addresses[0].cityName || ''
       if (cities && cities[targetCity]) {
         if (item.assetsClassifyName === '國定古蹟') cities[targetCity].nationalNum += 1
         cities[targetCity].items?.push(item)
