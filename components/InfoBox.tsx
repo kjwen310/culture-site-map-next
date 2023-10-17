@@ -27,38 +27,38 @@ const Info: React.FC<InfoBoxProps> = ({
 }) => {
   useEffect(() => {
     setShouldShowSiteInfo(false)
-  }, [selectedArea])
+  }, [selectedArea, setShouldShowSiteInfo])
 
-  return shouldShowSiteInfo ?
-  (
+  return (
     <StyledInfoBox>
-      <SiteInfo site={site} setShouldShowSiteInfo={setShouldShowSiteInfo} markerRefs={markerRefs} />
-    </StyledInfoBox>
-  )
-  : (
-    <StyledInfoBox>
-      {selectedCity && selectedArea && areaCulSites.length
-        ? <SiteList
-            mapRef={mapRef}
-            markerRefs={markerRefs}
-            areaCulSites={areaCulSites}
-            setShouldShowSiteInfo={setShouldShowSiteInfo}
-            setSite={setSite}
-            prevMarker={prevMarker}
-            setPrevMarker={setPrevMarker}
-            prevIcon={prevIcon}
-            setPrevIcon={setPrevIcon}
-          />
-        : null
-      }
-      {selectedCity && !selectedArea && cityCulSites.length
-        ? <PieChart cityCulSites={cityCulSites} />
-        : null
-      }
-      {!selectedCity && !selectedArea && <BarChart cities={cities} />}
-      {(selectedCity && !cityCulSites.length || selectedArea && !areaCulSites.length ) &&
-        <SiteListNoResult />
-      }
+      {shouldShowSiteInfo ? (
+        <SiteInfo site={site} setShouldShowSiteInfo={setShouldShowSiteInfo} markerRefs={markerRefs} />
+      ) : (
+        <>
+          {selectedCity && selectedArea && areaCulSites.length
+            ? <SiteList
+                mapRef={mapRef}
+                markerRefs={markerRefs}
+                areaCulSites={areaCulSites}
+                setShouldShowSiteInfo={setShouldShowSiteInfo}
+                setSite={setSite}
+                prevMarker={prevMarker}
+                setPrevMarker={setPrevMarker}
+                prevIcon={prevIcon}
+                setPrevIcon={setPrevIcon}
+              />
+            : null
+          }
+          {selectedCity && !selectedArea && cityCulSites.length
+            ? <PieChart cityCulSites={cityCulSites} />
+            : null
+          }
+          {!selectedCity && !selectedArea && <BarChart cities={cities} />}
+          {(selectedCity && !cityCulSites.length || selectedArea && !areaCulSites.length ) &&
+            <SiteListNoResult />
+          }
+        </>
+      )}
     </StyledInfoBox>
   )
 }

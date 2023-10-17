@@ -23,13 +23,14 @@ export const StyledMap = styled.div`
 `
 
 export const StyledPopup = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 240px;
   height: 180px;
   padding-top: 6px;
 
   img {
-    width: 100%;
-    height: 100%;
     object-fit: cover;
     border-radius: 4px;
   }

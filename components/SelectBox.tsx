@@ -23,26 +23,46 @@ const Select: React.FC<SelectBoxProps> = ({
   const targetCity = cityName.find((city) => city.CityName === selectedCity)
 
   useEffect(() => {
-    updateSelection()
-  }, [selectedCity, selectedArea])
-
-  useEffect(() => {
-    if (selectedCity && selectedArea) setOverView(areaCulSites[0])
-  }, [areaCulSites])
-  useEffect(() => {
-    if (selectedCity && !selectedArea) setOverView(cityCulSites[0])
-  }, [cityCulSites])
-
-  const updateSelection = () => {
-    if (selectedCity) {
-      setAreaCulSites([])
-      setCityCulSites(cities[selectedCity].items)
-      if (selectedArea) {
-        const items = cityCulSites.filter((item) => item.addresses[0].distName === selectedArea)
-        setAreaCulSites(items)
+    const updateSelection = () => {
+      if (selectedCity) {
+        setAreaCulSites([])
+        setCityCulSites(cities[selectedCity].items)
+        if (selectedArea) {
+          const items = cityCulSites.filter((item) => item.addresses[0].distName === selectedArea)
+          setAreaCulSites(items)
+        }
       }
     }
-  }
+
+    updateSelection()
+  }, [
+    selectedCity,
+    selectedArea,
+    cities,
+    cityCulSites,
+    setAreaCulSites,
+    setCityCulSites,
+  ])
+
+  useEffect(() => {
+    const setOverView = (item: Site | null) => {
+      const zoomLevel = selectedArea === '' ? 10 : 13
+      const doesHaveMap = mapRef && mapRef.current
+      const doesValidItem = item && item.latitude && item.longitude
+      if (doesHaveMap && doesValidItem) {
+        mapRef.current.flyTo([item.latitude, item.longitude], zoomLevel)
+      }
+    }
+
+    if (selectedCity && selectedArea) setOverView(areaCulSites[0])
+    if (selectedCity && !selectedArea) setOverView(cityCulSites[0])
+  }, [
+    areaCulSites,
+    cityCulSites,
+    mapRef,
+    selectedArea,
+    selectedCity,
+  ])
 
   const updateSelectCity = (e: React.ChangeEvent<HTMLSelectElement>) => {
     e.preventDefault()
@@ -53,15 +73,6 @@ const Select: React.FC<SelectBoxProps> = ({
   const updateSelectArea = (e: React.ChangeEvent<HTMLSelectElement>) => {
     e.preventDefault()
     setSelectedArea(e.target.value)
-  }
-
-  function setOverView(item: Site | null) {
-    const zoomLevel = selectedArea === '' ? 10 : 13
-    const doesHaveMap = mapRef && mapRef.current
-    const doesValidItem = item && item.latitude && item.longitude
-    if (doesHaveMap && doesValidItem) {
-      mapRef.current.flyTo([item.latitude, item.longitude], zoomLevel)
-    }
   }
 
   return (
